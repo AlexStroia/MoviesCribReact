@@ -1,32 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { CardList } from './component/card-list-component';
-
-
+import { CardList } from './components/card-list/card-list-component';
 
 class App extends Component {
-    constructor() {
-      super()
-      this.state = {
-        movies : {
-          results: []
-        },
-        searchField: '' 
-      }
-    }
+  constructor() {
+    super();
+    this.state = {
+      movies: [],
+      searchField: ''
+    };
+  }
 
-    componentDidMount() {
-      fetch("https://api.themoviedb.org/3/movie/popular?api_key=ed54cea63b99ab9822ad2510c09d1c0c&language=en-US&page=1")
+  componentDidMount() {
+    fetch(
+      'https://api.themoviedb.org/3/movie/popular?api_key=ed54cea63b99ab9822ad2510c09d1c0c&language=en-US&page=1'
+    )
       .then(response => response.json())
-      .then(jsonResponse => this.setState({movies: jsonResponse}));
-    }
+      .then(jsonResponse => this.setState({ movies: jsonResponse.results }));
+  }
 
   render() {
-    const movies = this.state.movies
+    const { movies } = this.state;
     return (
-      <div className="App">
-        <CardList movies = {movies}/>
+      <div   style={{
+        backgroundColor: 'black',
+      }} className="App">
+        <CardList movies={movies} />
       </div>
     );
   }
