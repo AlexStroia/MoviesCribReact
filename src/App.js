@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { CardList } from './components/card-list/card-list-component';
+import { SearchBar } from './components/search-bar/search-bar-component';
 
 class App extends Component {
   constructor() {
@@ -19,13 +20,20 @@ class App extends Component {
       .then(jsonResponse => this.setState({ movies: jsonResponse.results }));
   }
 
+  handleSearch = e => {
+    this.setState({ searchField: e.target.value })
+  }
+
   render() {
-    const { movies } = this.state;
+    const { movies, searchField } = this.state;
+    const filteredMovies = movies.filter(movie => movie.title.toLowerCase().includes(searchField.toLowerCase()))
     return (
-      <div   style={{
+      <div style={{
         backgroundColor: 'black',
       }} className="App">
-        <CardList movies={movies} />
+        <SearchBar placeholder="Enter a movie name"
+          handleChange={this.handleSearch} />
+        <CardList movies={filteredMovies} />
       </div>
     );
   }
